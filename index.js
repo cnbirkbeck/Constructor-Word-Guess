@@ -28,7 +28,7 @@ function playGame() {
     chosenWord = "";
     guesses= 10;
     if(pickedWords.length < wordBank.length) {
-        pickedWords = getWord();
+        chosenWord = getWord();
     } else {
         //Winning 
         console.log("You know a lot about the wizarding world! Cheers!");
@@ -36,7 +36,7 @@ function playGame() {
     }
     if(chosenWord) {
         word = new Word (chosenWord);
-        word.makeLetters();
+        word.createLetters();
         makeGuess();
     }
 }
@@ -44,8 +44,8 @@ function playGame() {
 function getWord() {
     let rando = Math.floor(Math.random() * wordBank.length);
     let randomWord = wordBank[rando];
-    if(chosenWord.indexOf(randomWord) === -1) {
-        chosenWord.push(randomWord);
+    if(pickedWords.indexOf(randomWord) === -1) {
+        pickedWords.push(randomWord);
         return randomWord;
     } else {
         return getWord();
@@ -83,5 +83,21 @@ function makeGuess() {
 }
 
 function continuePrompt() {
-    
+    inquirer.prompt([
+        {
+            name: "continue", 
+            type: "list", 
+            message: "Would you like to play again?", 
+            choices: ["Yes", "No"]
+        }
+    ])
+    .then(data => {
+        if(data.continue === "Yes"){
+            init();
+        } else {
+            console.log("Thanks for playing! See you again soon!");
+        }
+    });
 }
+
+init();
