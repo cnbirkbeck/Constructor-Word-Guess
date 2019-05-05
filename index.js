@@ -51,3 +51,37 @@ function getWord() {
         return getWord();
     }
 }
+
+function makeGuess() {
+    let checker = [];
+    inquirer.prompt([
+        {
+            name: "guessedLetter", 
+            message: word.update() + "\nGuess a letter!" + "\nGuesses Left: " + guesses
+        }
+    ])
+
+    .then(data =>{
+        word.letters.forEach(letter => {
+            letter.checkLetter(data.guessedLetter);
+            checker.push(letter.getCharacter());
+        });
+        if(guesses > 0 && checker.indexOf("_") !== -1){
+            guesses--;
+            if(guesses === 0) {
+                console.log("Oooops! You ran out of guesses! GAME OVER!");
+                continuePrompt();
+            } else{
+                makeGuess();
+            }
+        }else {
+            console.log ("Congratulations! You guessed the correct word!");
+            console.log(word.update());
+            playGame();
+        }
+    });
+}
+
+function continuePrompt() {
+    
+}
