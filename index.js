@@ -26,7 +26,7 @@ function init() {
 
 function playGame() {
     chosenWord = "";
-    guesses= 10;
+    guesses= 15;
     if(pickedWords.length < wordBank.length) {
         chosenWord = getWord();
     } else {
@@ -77,7 +77,8 @@ function makeGuess() {
         }else {
             console.log ("Congratulations! You guessed the correct word!");
             console.log(word.update());
-            playGame();
+            continuePrompt();
+            
         }
     });
 }
